@@ -2,15 +2,14 @@ function renderBooks() {
   const booksWrapper = document.querySelector('.books');
 
 const books = getBooks();
-console.log(books)
-
-booksWrapper.innerHTML =
-`<div class="book">
+ 
+const booksHtml = books.map(book=>
+{ return`<div class="book">
 <figure class="book__img--wrapper">
-<img class="book__img" src=${books[0].url}>
+<img class="book__img" src=${book.url}>
 </figure>
 <div class="book__title">
-${books[0].title}</div>
+${book.title}</div>
 <div class="book__ratings">
 <i class="fas fa-star"></i>
 <i class="fas fa-star"></i>
@@ -19,10 +18,24 @@ ${books[0].title}</div>
 <i class="fas fa-star-half-alt"></i>
 </div>
 <div class="book__price">
-<span class="book__price--normal">$59.95</span> $14.95
+<span>$${book.originalPrice.toFixed(2)}</span> 
 </div>
 </div>`
+}).join("")
+;
+
+booksWrapper.innerHTML = booksHtml;
 }
+
+// booksWrapper.innerHTML = ;
+
+function filterBooks(event) {
+  if (event.target.value === 'LOW_TO_HIGH') {
+    console.log ('sort by low to high')
+    renderBooks(event.target.value);
+  }
+}
+
 
 setTimeout(()=>{
 renderBooks();
@@ -34,7 +47,7 @@ function getBooks() {
     {
       id: 1,
       title: "Crack the Coding Interview",
-                url: encodeURIComponent ("assets-2/crack the coding interview.png"),
+                url: encodeURIComponent ("assets/crack the coding interview.png"),
       originalPrice: 49.95,
       salePrice: 14.95,
       rating: 4.5,
@@ -42,7 +55,7 @@ function getBooks() {
     {
       id: 2,
       title: "Atomic Habits",
-      url: encodeURIComponent ("assets-2/atomic habits.jpg"),
+      url: encodeURIComponent ("assets/atomic habits.jpg"),
       originalPrice: 39,
       salePrice: null,
       rating: 5,
