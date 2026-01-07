@@ -34,7 +34,7 @@ function getBooks() {
     {
       id: 1,
       title: "Crack the Coding Interview",
-                url: "assets-2/crack the coding interview.png",
+                url: encodeURIComponent ("assets-2/crack the coding interview.png"),
       originalPrice: 49.95,
       salePrice: 14.95,
       rating: 4.5,
@@ -42,7 +42,7 @@ function getBooks() {
     {
       id: 2,
       title: "Atomic Habits",
-      url: "assets-2/atomic habits.jpg",
+      url: encodeURIComponent ("assets-2/atomic habits.jpg"),
       originalPrice: 39,
       salePrice: null,
       rating: 5,
@@ -50,7 +50,7 @@ function getBooks() {
     {
       id: 3,
       title: "Deep Work",
-      url: "assets/deep work.jpeg",
+      url: encodeURIComponent("assets/deep work.jpeg"),
       originalPrice: 29,
       salePrice: 12,
       rating: 5,
