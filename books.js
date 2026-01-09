@@ -1,41 +1,68 @@
-function renderBooks() {
-  const booksWrapper = document.querySelector('.books');
+let books;
 
-const books = getBooks();
+async function renderBooks(filter) {
+const booksWrapper = document.querySelector('.books');
+
+  booksWrapper.classList += ' books__loading'
+
+  if(!books) {
+    books = await getBooks(); 
+  }
  
-const booksHtml = books.map(book=>
-{ return`<div class="book">
-<figure class="book__img--wrapper">
-<img class="book__img" src=${book.url}>
-</figure>
-<div class="book__title">
-${book.title}</div>
-<div class="book__ratings">
-<i class="fas fa-star"></i>
-<i class="fas fa-star"></i>
-<i class="fas fa-star"></i>
-<i class="fas fa-star"></i>
-<i class="fas fa-star-half-alt"></i>
-</div>
-<div class="book__price">
-<span>$${book.originalPrice.toFixed(2)}</span> 
-</div>
-</div>`
-}).join("")
-;
+  booksWrapper.classList.remove('books__loading')
 
-booksWrapper.innerHTML = booksHtml;
+  if (filter === 'LOW_TO_HIGH') {
+    books.sort((a, b) => (a.salePrice || a.originalPrice) - (b.salePrice || b.originalPrice));
+  } 
+  else if (filter === 'HIGH_TO_LOW') {
+    books.sort((b, a) => (b.salePrice || b.originalPrice) - (a.salePrice || a.originalPrice));
+  }
+  else if (filter === 'RATING') {
+    books.sort((a, b) => (b.rating) - (a.rating));
+  }
+
+  const booksHtml = books.map(book =>
+    `<div class="book">
+      <figure class="book__img--wrapper">
+        <img class="book__img" src=${book.url}>
+      </figure>
+      <div class="book__title">
+        ${book.title}
+      </div>
+      <div class="book__ratings">
+        ${ratingsHTML(book.rating)}
+      </div>
+      <div class="book__price">
+        ${priceHTML(book.originalPrice, book.salePrice)}
+      </div>
+    </div>`
+  ).join("");
+
+  booksWrapper.innerHTML = booksHtml;
+
 }
 
-// booksWrapper.innerHTML = ;
+function priceHTML(originalPrice, salePrice) {
+  if (!salePrice) {
+    return `$${originalPrice.toFixed(2)}`
+  }
+return ` <span class="book__price--normal">$${originalPrice.toFixed(2)}</span> $${salePrice.toFixed(2)}`
+}
+
+function ratingsHTML(rating) {
+  let ratingHTML = '';
+  for(let i =0; i < Math.floor(rating); ++i) {
+    ratingHTML += '<i class="fas fa-star"></i>'
+  }
+  if (!Number.isInteger(rating)) {
+  ratingHTML += '<i class="fas fa-star-half-alt"></i>'
+  }
+  return ratingHTML;
+}
 
 function filterBooks(event) {
-  if (event.target.value === 'LOW_TO_HIGH') {
-    console.log ('sort by low to high')
-    renderBooks(event.target.value);
-  }
+renderBooks(event.target.value);
 }
-
 
 setTimeout(()=>{
 renderBooks();
@@ -43,7 +70,9 @@ renderBooks();
 
 // FAKE DATA
 function getBooks() {
-  return [
+  return new Promise((resolve)=>{
+ setTimeout (() => {
+  resolve ([
     {
       id: 1,
       title: "Crack the Coding Interview",
@@ -132,5 +161,8 @@ function getBooks() {
       salePrice: null,
       rating: 4.5,
     },
-  ];
+ ])
+ },1000);
+  })
 }
+ 

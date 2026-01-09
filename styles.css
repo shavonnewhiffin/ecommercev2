@@ -411,6 +411,40 @@ align-items: center;
     padding: 0 8px;
 }
 
+/* LOADING STATE */
+
+.books__loading {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:#7342d6;
+    padding-top: 60px;
+    font-size: 60px;
+}
+
+.books__loading--spinner {
+    display: none !important;
+}
+.books__loading .books__loading--spinner {
+    display: block !important;
+}
+
+.fa-spinner {
+    animation: rotate 600ms infinite linear;
+}
+
+@keyframes rotate {
+    0%{
+transform: rotate(0);
+    }
+    100% {
+transform: rotate(360deg);
+    }
+}
+
+/* MEDIA QUERIES */
+
 @media (max-width: 550px) {
     .nav__links {
         display: none;

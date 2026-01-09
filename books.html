@@ -18,7 +18,7 @@
       <div class="nav__container">
         <img class="logo" src="./assets/Library.svg" alt="">
         <ul class="nav__links">
-          <li><a href="#" class="nav__link">Home</a></li>
+          <li><a href="./index.html" class="nav__link">Home</a></li>
           <li><a href="#" class="nav__link">Contact</a></li>
           <li><a href="#" class="nav__link nav__link--primary">Books</a></li>
         </ul>
@@ -31,7 +31,7 @@
           </button>
           <ul class="menu__links">
             <li class="menu__list">
-              <a href="#" class="menu__link" onclick="closeMenu()">Home</a>
+              <a href="./index.html" class="menu__link" onclick="closeMenu()">Home</a>
             </li>
             <li class="menu__list">
               <a href="#features" class="menu__link" onclick="closeMenu()">Books</a>
@@ -53,7 +53,7 @@
           <h2 class="section__title books__header--title">
             All <span class="purple">Books</span>
           </h2>
-          <select id="filter" onchange = "filterBooks(event.target.value)">
+          <select id="filter" onchange = "filterBooks(event)">
             <option value="" disabled selected>Sort</option>
             <option value="LOW_TO_HIGH">Price, Low to High</option>
             <option value="HIGH_TO_LOW">Price, High to Low</option>
@@ -61,7 +61,7 @@
           </select>
         </div>
          <div class="books">
-
+            <i class="fas fa-spinner books__loading--spinner"></i>
          </div>
         </div>
       </div>
